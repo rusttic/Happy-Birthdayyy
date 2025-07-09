@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Urvara 🎂</title>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+   
+@keyframes fadeOut {
+  to { opacity: 0; visibility: hidden; }
+}
+    
+
+   body {
+  background: 
+    linear-gradient(to right, #ffe6f0, #ffcce0),
+    url('images/stars-overlay.png');
+  background-repeat: repeat;
+  background-blend-mode: screen;
+  color: #3b003b;
+  overflow-x: hidden;
+}
+
+    header {
+      text-align: center;
+      padding: 100px 20px 40px;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      color: #d81b60;
+    }
+    .reveal-btn {
+      margin-top: 30px;
+      padding: 12px 28px;
+      font-size: 1rem;
+      background: #f06292;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .reveal-btn:hover {
+      background: #ec407a;
+    }
+
+    .section {
+      display: none;
+      padding: 40px 20px;
+      animation: fadeIn 1s ease forwards;
+      text-align: center;
+    }
+    .memory-card, .genshin-card {
+      background: #fff0f5;
+      border-radius: 12px;
+      margin: 20px auto;
+      max-width: 600px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .memory-card img, .genshin-card img {
+      width: 100%;
+      display: block;
+    }
+    .memory-card p, .genshin-card p {
+      padding: 15px;
+      font-style: italic;
+      font-size: 1rem;
+      color: #5a005a;
+    }
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      color: #c2185b;
+    }
+
+    .genshin-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .genshin-card {
+      width: 300px;
+      transition: transform 0.3s ease;
+    }
+    .genshin-card:hover {
+      transform: scale(1.05);
+    }
+
+    .final-msg {
+      background:#fff0f5;
+      padding: 40px;
+      border-radius: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-size: 1.4rem;
+      color:#5a005a;
+      line-height: 1.8;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    #balloons {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #achievement-popup {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #fff;
+  color: #e91e63;
+  padding: 15px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+  z-index: 2000;
+}
+#achievement-popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    .balloon {
+      position: absolute;
+      width: 40px; height: 60px;
+      background: pink;
+      border-radius: 50% 50% 45% 45%;
+      animation: floatUp 10s infinite ease-in;
+      opacity: 0.7;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 40px;
+      background: #aaa;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) translateX(0); }
+      100% { transform: translateY(-200px) translateX(20px); }
+    }
+
+    .audio-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1001; 
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  color: #e91e63;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+
+
+    .reveal-wrapper {
+      margin-top: 30px;
+    }
+
+    .instruction {
+      font-size: 0.95rem;
+      color: #a80061;
+      font-style: italic;
+      margin-top: 15px;
+    }
+
+      #progressBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 5px;
+  background: #d81b60;
+  z-index: 10000;
+  transition: width 0.25s ease-out;
+}
+
+     #loadingScreen {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ffe6f0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #d81b60;
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 3s;
+  pointer-events: none;
+  opacity: 1;
+}
+
+    #overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 998;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  text-align: center;
+  padding: 20px;
+}
+
+#overlay h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #d81b60;
+}
+
+.arrow {
+  font-size: 2rem;
+  animation: bounce 1s infinite;
+  margin-top: 10px;
+  color: #e91e63;
+}
+
+.photo-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  padding: 10px 0;
+}
+
+.photo-card {
+  width: 200px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.photo-card:hover {
+  transform: scale(1.05);
+}
+
+.photo-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Confetti burst container */
+#confetti-container {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.firefly {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #fff5f8;
+  border-radius: 50%;
+  animation: twinkle 3s infinite ease-in-out alternate;
+  z-index: 0;
+}
+@keyframes twinkle {
+  0% { opacity: 0.2; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.5); }
+}
+
+.confetti {
+  position: absolute;
+  width: 10px; height: 10px;
+  background: hsl(var(--hue), 70%, 60%);
+  top: 0;
+  animation: confetti-fall 3s ease-out forwards;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+  </style>
+</head>
+<body>
+  <div id="progressBar"></div>
+  <div id="loadingScreen">
+  <div id="loadingContent">
+    <h2>You wait 🖐... I've got something for you! 🎁</h2>
+  </div>
+</div>
+
+  <div id="balloons"></div>
+  <!-- Overlay asking to click speaker -->
+<div id="overlay">
+  <h2>You!!! Click the 🔊 speaker button top right to start the surprise 🎵</h2>
+  <div class="arrow" style="position: absolute; top: 75px; right: 20px; transform: rotate(180deg);">⬆️</div>
+</div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="images/Blue-Yung-Kai.mp3" type="audio/mpeg" />
+  </audio>
+  <button class="audio-control" onclick="toggleMusic()">🔊</button>
+
+  <!-- Lightbox Popup -->
+  <div id="lightbox" style="display:none; position:fixed; z-index:999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; flex-direction:column;">
+    <img id="lightbox-img" src="" style="max-width:90%; max-height:80%; border-radius:12px;" />
+    <p id="lightbox-caption" style="color:#fff; padding:15px; font-size:1.1rem; max-width:90%; text-align:center;"></p>
+    <button onclick="closeLightbox()" style="margin-top:10px; padding:10px 20px; font-size:1rem; background:#f06292; color:white; border:none; border-radius:6px;">Close</button>
+  </div>
+
+  <header>
+    <h1>Happy Birthday Urvara 🎉</h1>
+    <button class="reveal-btn" onclick="reveal()">Reveal Album</button>
+    <p class="instruction">💡 Keep pressing the "Reveal Album" button until the last page pops up — or you’ll miss half the fun!</p>
+  </header>
+
+  <!-- Memory 1 -->
+  <section class="section" id="memory1">
+    <h2>📸 Memory #1</h2>
+    <div class="memory-card">
+      <img src="images/group.jpg" alt="Group Photo" onclick="openLightbox(this.src, 'Only one chaotic photo available. But still — effort was made. Respect it.')" />
+      <p>Only one chaotic photo available. But still — effort was made. Respect it.</p>
+    </div>
+    <div class="reveal-wrapper">
+      <button class="reveal-btn" onclick="reveal()">Reveal Next</button>
+    </div>
+  </section>
+
+  <!-- Compliments -->
+  <section class="section" id="compliment">
+    <h2>Random Appreciations 💬</h2>
+    <div class="memory-card">
+      <p>You’re chaotic, frank, unpredictable — and somehow all of that makes perfect sense.</p>
+    </div>
+    <div class="memory-card">
+      <p>Also, stop limiting yourself only till genshin explore new games there is a world outside genshin too noob!</p>
+    </div>
+    <div class="memory-card">
+      <p>Stop being so lazy! You have a lot of potential. You can do it — it’s just that you’re too lazy 😤</p>
+    </div>
+    <div class="reveal-wrapper">
+      <button class="reveal-btn" onclick="reveal()">Reveal Next</button>
+    </div>
+  </section>
+
+  <!-- Genshin Memories -->
+  <section class="section" id="genshin">
+    <h2>🎮 Carried in Genshin. Exposed publicly.</h2>
+    <div class="genshin-gallery">
+      <div class="genshin-card">
+        <img src="images/snow.jpg" onclick="openLightbox(this.src, 'The famous snow quest. You carried. I ran around like a confused potato. ❄️🥔')" />
+        <p>The famous snow quest. You carried. I ran around like a confused potato. ❄️🥔</p>
+      </div>
+      <div class="genshin-card">
+        <img src="images/stare.jpg" onclick="openLightbox(this.src, 'Peak gaming moment: Just standing there. Staring. For no reason.')" />
+        <p>Peak gaming moment: Just standing there. Staring. For no reason.</p>
+      </div>
+      <div class="genshin-card">
+        <img src="images/somehow.jpg" onclick="openLightbox(this.src, 'Somehow ended up here. No idea how. You probably knew.')" />
+        <p>Somehow ended up here. No idea how. You probably knew.</p>
+      </div>
+      <div class="genshin-card">
+        <img src="images/carry.jpg" onclick="openLightbox(this.src, 'This whole session was basically: you - damage dealer, me - moral support. 💪😎')" />
+        <p>This whole session was basically: you - damage dealer, me - moral support. 💪😎</p>
+      </div>
+      <div class="genshin-card">
+        <img src="images/ice.jpg" onclick="openLightbox(this.src, 'We crossed the ice-capped water all the way up here just to vibe. Peak productivity. ⛰️✨')" />
+        <p>We crossed the ice-capped water all the way up here just to vibe. Peak productivity. ⛰️✨</p>
+      </div>
+    </div>
+    <div class="reveal-wrapper">
+      <button class="reveal-btn" onclick="reveal()">Reveal Next</button>
+    </div>
+<!-- Character Card Section -->
+<section class="section" id="character-card">
+  <h2>✨ I've got your character card also hmmm </h2>
+  <div class="memory-card" style="text-align:left; padding: 20px;">
+    <h3 style="color:#c2185b;">Name:</h3>
+    <p>Lazy Urvara</p>
+
+    <h3 style="color:#c2185b;">Vision:</h3>
+    <p>Lazy 😴 (because obviously you are the most lazy person I've seen)</p>
+
+    <h3 style="color:#c2185b;">Weapon:</h3>
+    <p>Wit & Sarcasm (5★, highly refined)</p>
+
+    <h3 style="color:#c2185b;">Constellation:</h3>
+    <p>Constellation Level 6 — Fully unlocked chaos mode</p>
+
+    <h3 style="color:#c2185b;">Passive Talents:</h3>
+    <ul style="margin-left: 20px; color:#5a005a;">
+      <li>✔️ Insta-roast: Automatically triggers when someone says something dumb</li>
+      <li>✔️ Lazy Prodigy: Can do everything brilliantly... if she actually tries</li>
+    </ul>
+
+    <h3 style="color:#c2185b;">Friendship Level:</h3>
+    <p>Level 10. Unlocked special voice lines like: “Youuu stoppppppp!”</p>
+  </div>
+  <div class="reveal-wrapper">
+    <button class="reveal-btn" onclick="reveal()">Reveal Next</button>
+  </div>
+</section>
+
+  </section>
+
+  <!-- More Memories -->
+<!-- More Memories -->
+<section class="section" id="more-memories">
+  <h2>📷 Full credit to Kangana for this part 😏</h2>
+  <div class="photo-gallery">
+    <div class="photo-card">
+      <img src="images/img4.jpg" alt="Memory 1" onclick="openLightbox(this.src, )" />
+    </div>
+    <div class="photo-card">
+      <img src="images/img1.jpg" alt="Memory 2" onclick="openLightbox(this.src,)" />
+    </div>
+    <div class="photo-card">
+      <img src="images/img2.jpg" alt="Memory 3" onclick="openLightbox(this.src,)" />
+    </div>
+    <div class="photo-card">
+      <img src="images/img3.jpg" alt="Memory 4" onclick="openLightbox(this.src,)"/>
+    </div>
+  </div>
+  <div class="reveal-wrapper">
+    <button class="reveal-btn" onclick="reveal()">Reveal Final Message</button>
+  </div>
+</section>
+
+
+
+  <!-- Final Message -->
+  <section class="section" id="final">
+    <div class="final-msg">
+  That’s all. Website’s done. One chaotic group photo. A bunch of Genshin moments. Some random roasts maybe? And even your own (na sakeko) Genshin-style character card — made with full analysis though. 💫<br><br>
+  Since I couldn’t meet you in person or hand over a gift this time, I decided to make something a little different — something unique, something you could always keep saved with you, even if it's just in a browser tab.<br><br>
+  If you smiled even once — totally worth it. 😎<br><br>
+  Happy Birthday again, Urvara! ❤️<br><br>
+  <span style="font-size: 0.9rem; color: #a0528d;">~ made with full dedication and almost 620 lines of code😤</span>
+</div>
+<div id="confetti-container"></div>
+<div id="achievement-popup"></div>
+<div id="falling-decor"></div>
+
+
+ <script>
+
+  let index = 0;
+  const sections = ["memory1", "compliment", "genshin", "character-card", "more-memories", "final"];
+
+
+ function reveal() {
+  if (index < sections.length) {
+    const currentSection = sections[index];
+    document.getElementById(currentSection).style.display = "block";
+
+    // Scroll first
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+      // Final section: Confetti + specific achievement
+      if (currentSection === "final") {
+        launchConfetti();
+        showAchievement("Achievement Unlocked: Scrolled Till The End 🏁");
+      } else {
+        // Rotate through fun random achievement messages
+        const achievements = [
+          "Achievement Unlocked: Chaos Appreciator 🌀",
+          "Achievement Unlocked: You’re Still Here? 😳",
+          "Achievement Unlocked: Too Much Free Time ⏳",
+          "Achievement Unlocked: Persistent Scroller 👇",
+          "Achievement Unlocked: Photo Fanatic 📸",
+          "Achievement Unlocked: Emotional Damage Resister 💔",
+          "Achievement Unlocked: Genshin Survivor 🎮",
+          "Achievement Unlocked: You’re Really Clicking All of Them, huh 😅",
+          "Achievement Unlocked: Almost There 🥲"
+        ];
+        const randomMsg = achievements[Math.floor(Math.random() * achievements.length)];
+        showAchievement(randomMsg);
+      }
+
+    }, 300);
+
+    index++;
+  }
+}
+
+  function toggleMusic() {
+    const audio = document.getElementById("bgMusic");
+    const btn = document.querySelector(".audio-control");
+
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = "🔊";
+
+      // Remove overlay after enabling music
+      const overlay = document.getElementById("overlay");
+      if (overlay) overlay.style.display = "none";
+    } else {
+      audio.pause();
+      btn.textContent = "🔇";
+    }
+  }
+
+  function openLightbox(src, caption) {
+    document.getElementById("lightbox").style.display = "flex";
+    document.getElementById("lightbox-img").src = src;
+    document.getElementById("lightbox-caption").innerText = caption;
+  }
+
+  function closeLightbox() {
+    document.getElementById("lightbox").style.display = "none";
+  }
+
+  function generateBalloons() {
+    const container = document.getElementById('balloons');
+    for (let i = 0; i < 15; i++) {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.background = `hsl(${Math.random() * 360}, 70%, 75%)`;
+      balloon.style.animationDuration = 8 + Math.random() * 5 + 's';
+      container.appendChild(balloon);
+    }
+  }
+  window.onload = generateBalloons;
+  window.addEventListener("load", () => {
+  const loading = document.getElementById("loadingScreen");
+  setTimeout(() => {
+    loading.style.display = "none";
+  }, 4000); // To match fade duration
+});
+window.addEventListener("scroll", () => {
+  const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+  const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrolled = (winScroll / height) * 100;
+  document.getElementById("progressBar").style.width = scrolled + "%";
+});
+
+function launchConfetti() {
+  const container = document.getElementById("confetti-container");
+  for (let i = 0; i < 100; i++) {
+    const confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    confetti.style.animationDuration = 2 + Math.random() * 2 + "s";
+    confetti.style.setProperty("--hue", Math.random() * 360);
+    container.appendChild(confetti);
+
+    // Remove after animation
+    setTimeout(() => {
+      container.removeChild(confetti);
+    }, 4000);
+  }
+}
+function showAchievement(message) {
+  const popup = document.getElementById("achievement-popup");
+
+  // Remove the show class if it's already visible
+  popup.classList.remove("show");
+
+  // Delay slightly to ensure DOM reflow
+  setTimeout(() => {
+    popup.innerText = message;
+    popup.classList.add("show");
+
+    // Remove after animation ends
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 3000);
+  }, 50);
+}
+</script>
+</body>
+</html>
+
